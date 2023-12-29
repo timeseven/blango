@@ -60,7 +60,8 @@ class Dev(Configuration):
         "allauth",
         "allauth.account",
         "allauth.socialaccount",
-        "allauth.socialaccount.providers.google"
+        "allauth.socialaccount.providers.google",
+        "drf_yasg"
     ]
 
     MIDDLEWARE = [
@@ -224,15 +225,22 @@ class Dev(Configuration):
     ACCOUNT_AUTHENTICATION_METHOD = "email"
 
     REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly"
-    ],
-}
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.BasicAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+            "rest_framework.authentication.TokenAuthentication",
+        ],
+        "DEFAULT_PERMISSION_CLASSES": [
+            "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+        ],   
+    }
+
+    SWAGGER_SETTINGS = {
+        "SECURITY_DEFINITIONS": {
+            "Token": {"type": "apiKey", "name": "Authorization", "in": "header"},
+            "Basic": {"type": "basic"},
+        }
+    }
     
 class Prod(Dev):
     DEBUG = False
